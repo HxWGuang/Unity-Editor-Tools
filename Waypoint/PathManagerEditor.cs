@@ -29,7 +29,7 @@ public class PathManagerEditor : Editor
         }
 
         // --- 绘制路径点之间的连线 ---
-        Handles.color = Color.yellow;
+        Handles.color = pathManager.wayLineColor;
         for (int i = 0; i < pathManager.waypoints.Count - 1; i++)
         {
             // 将本地坐标转换为世界坐标进行绘制
@@ -39,6 +39,7 @@ public class PathManagerEditor : Editor
         }
 
         // --- 绘制和操作每个路径点的句柄 ---
+        Handles.color = pathManager.waypointColor;
         for (int i = 0; i < pathManager.waypoints.Count; i++)
         {
             // 开始检查GUI是否有变化，以便支持Undo/Redo
@@ -49,7 +50,7 @@ public class PathManagerEditor : Editor
 
             // 在Scene视图中创建一个可自由移动的句柄
             // 参数: 位置, 旋转, 大小, 捕捉值, 句柄形状
-            Vector3 newWorldPos = Handles.FreeMoveHandle(worldPos, 0.25f, Vector3.one * 0.1f, Handles.SphereHandleCap);
+            Vector3 newWorldPos = Handles.FreeMoveHandle(worldPos, pathManager.waypointSize, Vector3.one * 0.1f, Handles.SphereHandleCap);
             
             // 添加一个标签显示路径点的索引
             Handles.Label(worldPos + Vector3.up * 0.3f, $"P{i}");
